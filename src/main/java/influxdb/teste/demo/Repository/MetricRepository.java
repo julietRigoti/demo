@@ -4,11 +4,16 @@ import influxdb.teste.demo.Model.Metric;
 
 import org.springframework.stereotype.Repository;
 
+import com.influxdb.client.DeleteApi;
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.WriteApiBlocking;
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
 import com.influxdb.query.FluxTable;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,4 +48,24 @@ public class MetricRepository {
             ))
             .collect(Collectors.toList());
     }
+
+    public void deleteMetric(Metric metric) {
+       
+        DeleteApi deleteApi = influxDBClient.getDeleteApi();
+
+        OffsetDateTime start = OffsetDateTime.ofInstant(metric.getTimestamp(), ZoneOffset.UTC);
+        OffsetDateTime end = start.plus(1, ChronoUnit.MILLIS);
+
+        String predicate = String.format("_measurement=\"%s\"", metric.getName());
+
+        deleteApi.delete(
+            start,
+            end,
+            predicate,
+            "bucketMetrics", // Substitua pelo nome real do seu bucket
+            "GEDT"     // Substitua pelo nome da sua organização
+        );
+       
+    }
+
 }

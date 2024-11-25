@@ -1,13 +1,20 @@
-# Usar uma imagem base do OpenJDK
-FROM openjdk:17-jdk as build
-# Definir o diretório de trabalho
+FROM maven:3.8.1-openjdk-17 as build
+
 WORKDIR /demo
 
-# Copiar o JAR do seu projeto para dentro da imagem
-COPY target/*.jar /demo/demo-app.jar
+COPY . . 
 
-# Expor a porta que a aplicação vai rodar
+RUN mvn clean package 
+
+
+FROM openjdk:17-jdk 
+
+WORKDIR /demo
+
+COPY --from=build /demo/target/demo-0.0.1-SNAPSHOT.jar .
+
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "demo-app.jar"]
+# Rodar a aplicação
+CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
 

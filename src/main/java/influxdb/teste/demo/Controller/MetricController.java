@@ -28,4 +28,17 @@ public class MetricController {
     public List<Metric> queryMetrics(@RequestParam(defaultValue = "-1h") String range) {
         return metricRepository.getAllMetrics(range);
     }
+
+    @PutMapping
+    public ResponseEntity<Void> updateMetric(@RequestBody Metric metric) {
+        metricRepository.saveMetric(metric);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteMetric(@RequestBody Metric metric) {
+        metricRepository.deleteMetric(metric);
+        return ResponseEntity.ok().build();
+    }
+
 }

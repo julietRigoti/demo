@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class InfluxDBConfig {
 
-    private final String url = "http://localhost:8086";
-    private final String token = "my-secret-token";
-    private final String org = "my-org";
-    private final String bucket = "my-bucket";
+    private final String url = "http://influxdb:8086/";
+    private final String token = "INFLUXGEDTOKEN";
+    private final String org = "GEDT";
+    private final String bucket = "bucketMetrics";
 
     @Bean
     public InfluxDBClient influxDBClient() {

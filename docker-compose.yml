@@ -9,8 +9,8 @@ services:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=password
-      - DOCKER_INFLUXDB_INIT_ORG=org
-      - DOCKER_INFLUXDB_INIT_BUCKET=bucket
+      - DOCKER_INFLUXDB_INIT_ORG=GEDT
+      - DOCKER_INFLUXDB_INIT_BUCKET=bucketMetrics
 
   app:
     build:
@@ -19,10 +19,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_INFLUX_URL=http://influxdb:8086
-      - SPRING_INFLUX_TOKEN=admin:password
-      - SPRING_INFLUX_BUCKET=bucket
-      - SPRING_INFLUX_ORG=org
+      - SPRING_INFLUX_URL=http://influxdb:8086/
+      - SPRING_INFLUX_TOKEN=INFLUXGEDTOKEN
+      - SPRING_INFLUX_BUCKET=bucketMetrics
+      - SPRING_INFLUX_ORG=GEDT
     depends_on:
       - influxdb
     volumes:

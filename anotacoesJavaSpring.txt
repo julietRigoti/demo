@@ -1,26 +1,26 @@
 Spring boot 
 
-- Spring boot é um projeto da Spring que visa facilitar a criação de aplicações Java.
+- Spring boot é um projeto da Spring que visa facilitar a criação de aplicações Java. Para que o desenvolvedor possa focar na lógica de negócio da aplicação e não na configuração do projeto.
 - Spring boot é uma forma de simplificar a configuração de aplicações Spring.
 
 Spring initializr (https://start.spring.io/)
-- O Spring initializr é uma ferramenta online que permite a criação de projetos Spring boot.
+- O Spring initializr é uma ferramenta online que permite a criação de projetos Spring boot. É com ela que o desenvolvedor pode configurar as dependências do projeto e gerar o projeto Spring boot.
 - O Spring initializr permite a configuração de dependências e a geração de um projeto Spring boot.
 
 ----------------------------------------------------------------
 
-- As dependências do Spring boot são gerenciadas pelo Maven ou Gradle. E o Spring boot utiliza o Tomcat como servidor de aplicação padrão. O Tomcat é um servidor web que suporta aplicações Java. 
+- As dependências do Spring boot são gerenciadas pelo Maven ou Gradle. E o Spring boot utiliza o Tomcat como servidor de aplicação padrão. O Tomcat é um servidor web que suporta aplicações Java.
 
 - Algumas dependências existentes no Spring boot: 
-    => Lombok: Biblioteca que permite a geração de código boilerplate. Facilita a criação de classes Java. 
-    => Spring Boot DevTools: Ferramenta que permite o desenvolvimento de aplicações Spring boot de forma mais rápida. 
+    => Lombok: Biblioteca que permite a geração de código boilerplate. Facilita a criação de classes Java. Como a geração de métodos getters, setters, equals, hashCode e toString. Poupando o tempo do desenvolvedor.
+    => Spring Boot DevTools: Ferramenta que permite o desenvolvimento de aplicações Spring boot de forma mais rápida. Com ela, é possível reiniciar a aplicação automaticamente quando houver alterações no código fonte. Isso para o desenvolvedor não precisar reiniciar a aplicação manualmente.
     => Spring Web: Dependência que permite a criação de aplicações web com o Spring boot. Incluido o Spring MVC. E RESTful web services. 
-    => Spring Data JPA: Dependência que permite a integração do Spring boot com o JPA. JPA é uma especificação que permite a persistência de dados em Java.
+    => Spring Data JPA: Dependência que permite a integração do Spring boot com o JPA. JPA é uma especificação que permite a persistência de dados em Java. É com o JPA que o desenvolvedor cuidará do banco de dados.
 
  ---------------------------------------------------------------
  Padrão MVC
 
-- O padrão MVC é um padrão de arquitetura de software que separa a aplicação em três componentes principais: Model, View e Controller.
+- O padrão MVC é um padrão de arquitetura de software que separa a aplicação em três componentes principais: Model, View e Controller. Esse padrão é utilizado para organizar o código da aplicação e facilitar a manutenção e a evolução da aplicação.
     => Model: Representa a camada de modelo da aplicação
      => É no Model que fica as classes que representam os dados da aplicação.
     => View: Representa a camada de visualização da aplicação.
@@ -42,26 +42,53 @@ Spring initializr (https://start.spring.io/)
         => O Controller é responsável por chamar o DTO para representar os dados da aplicação.
 
         => Quando criamos a classe Controller, devemos anotá-la com a anotação @RestController.
-            => A anotação @RestController indica que a classe é um Controller RESTful.
-            => A anotação @RestController é uma combinação das anotações @Controller e @ResponseBody.
+            => A anotação @RestController indica que a classe é um Controller RESTful. Isso quer dizer que a classe é um Controller que retorna JSON para o usuário. O JSON é um formato de dados que é utilizado para trocar informações entre o servidor e o cliente.
+            => A anotação @RestController é uma combinação das anotações @Controller e @ResponseBody. O @ResponseBody significa que o retorno do método deve ser serializado e retornado como resposta HTTP.
             => A anotação @Controller indica que a classe é um Controller.
-            => A anotação @ResponseBody indica que o retorno do método deve ser serializado e retornado como resposta HTTP.
-            => Quando criamos um método no Controller, devemos anotá-lo com a anotação @RequestMapping.
-            => A anotação @RequestMapping indica que o método é um endpoint RESTful.
+            => Quando criamos um método no Controller, devemos anotá-lo com a anotação @RequestMapping. Para que o método seja um endpoint RESTful, ou seja, um método que pode ser acessado via HTTP.
             => A anotação @RequestMapping é uma combinação das anotações @GetMapping, @PostMapping, @PutMapping e @DeleteMapping.
                 => A anotação @GetMapping indica que o método é um endpoint RESTful do tipo GET.
-                    => O GET é um método HTTP que é utilizado para recuperar informações do servidor.
+                    => O GET é um método HTTP que é utilizado para recuperar informações do servidor. Ou seja para buscar informações do servidor.
                 => A anotação @PostMapping indica que o método é um endpoint RESTful do tipo POST.
-                    => O POST é um método HTTP que é utilizado para enviar informações para o servidor.
+                     => O POST é um método HTTP que é utilizado para enviar informações para o servidor. Ou seja para inserir informações no servidor.
                 => A anotação @PutMapping indica que o método é um endpoint RESTful do tipo PUT.
-                    => O PUT é um método HTTP que é utilizado para atualizar informações no servidor.
+                    => O PUT é um método HTTP que é utilizado para atualizar informações no servidor. Ou seja para modificar informações no servidor.
                 => A anotação @DeleteMapping indica que o método é um endpoint RESTful do tipo DELETE.
-                    => O DELETE é um método HTTP que é utilizado para excluir informações do servidor.
+                    => O DELETE é um método HTTP que é utilizado para excluir informações do servidor. Ou seja para remover informações do servidor.
 
-    => O Service é uma camada que contém a lógica de negócio da aplicação.
-    => O Repository é uma camada que contém a lógica de acesso a dados da aplicação. 
+    => O Service é uma camada que contém a lógica de negócio da aplicação. O que diferencia o Service do Controller é que o Service contém a lógica de negócio da aplicação. Enquanto o Controller contém a lógica de acesso a dados da aplicação.
+        => O Service é responsável por realizar operações de negócio da aplicação.
+        => O Service é responsável por chamar o Repository para acessar os dados da aplicação.
+        => O Service é responsável por chamar o Model para representar os dados da aplicação.
+        => O Service é responsável por chamar o DTO para representar os dados da aplicação.
+    => O Repository é uma camada que contém a lógica de acesso a dados da aplicação.
+          OBS: O que diferencia o Repository do Service é que o Repository contém a lógica de acesso a dados da aplicação. Enquanto o Service contém a lógica de negócio da aplicação.
+          OBS: O Repository e o Controller andam juntos. O Controller chama o Repository para acessar os dados da aplicação. E o Repository retorna os dados para o Controller.
+          OBS: Isso tudo para tornar a aplicação mais organizada e fácil de manter.
+
         => O Repository é responsável por realizar operações de CRUD (Create, Read, Update, Delete) no banco de dados.
-    => O DTO é uma camada que contém a representação dos dados da aplicação.
+    => O DTO é uma camada que contém a representação dos dados da aplicação. Isso quer dizer que o DTO é uma classe que contém os atributos da aplicação. E é utilizada para representar os dados da aplicação.
+        OBS: O que diferencia o DTO do Model é que o DTO é uma classe que contém os atributos da aplicação. Enquanto o Model é uma classe que contém os dados da aplicação. Por exemplo: Se a aplicação tem uma tabela de usuários, o DTO é a classe que contém os atributos do usuário. E o Model é a classe que contém os dados do usuário.
+        Veja o exemplo abaixo:
+        DTO:
+        public class UserDTO {
+            private Long id;
+            private String name;
+            private String email;
+            private String password;
+            // getters e setters
+        }
+
+        Model:
+        public class User {
+            private Long id;
+            private String name;
+            private String email;
+            private String password;
+            // getters e setters
+        }
+
+        OBS: O DTO é mais utilizado em projetos mais complexos. Onde é necessário separar a representação dos dados da aplicação da lógica de negócio da aplicação.
 
 - Logo a estrutura de um projeto Spring boot é: 
     => Controller: Camada responsável por receber as requisições do usuário e chamar a lógica de negócio da aplicação.
@@ -76,8 +103,8 @@ Spring initializr (https://start.spring.io/)
 
 - O Lombok permite a criação de classes Java de forma mais simples e rápida.
     => @Configuration: A anotação @Configuration é utilizada para indicar que a classe é uma classe de configuração.
-    => @Bean: A anotação @Bean é utilizada para indicar que o método é um bean do Spring. O bean é um objeto que é gerenciado pelo Spring. 
-    => @Autowired: A anotação @Autowired é utilizada para injetar uma dependência no Spring.
+    => @Bean: A anotação @Bean é utilizada para indicar que o método é um bean do Spring. O bean é um objeto que é gerenciado pelo Spring. Em outras palavras, o bean é um objeto que é instanciado e gerenciado pelo Spring. Esse objeto pode ser injetado em outras classes, sem precisar que o desenvolvedor instancie manualmente. Essa ideia é utilizada em mais @'s do Spring.
+    => @Autowired: A anotação @Autowired é utilizada para injetar uma dependência no Spring. Normalmente usado quando se tem uma classe de serviço.
     => @Data: A anotação @Data é utilizada para gerar os métodos getters, setters, equals, hashCode e toString.
     => @NoArgsConstructor: A anotação @NoArgsConstructor é utilizada para gerar um construtor sem argumentos.
     => @AllArgsConstructor: A anotação @AllArgsConstructor é utilizada para gerar um construtor com todos os argumentos.
@@ -136,3 +163,7 @@ Spring initializr (https://start.spring.io/)
 
 - É póssivel criar outro arquivo de configuração, chamado application-dev.properties, para configurar propriedades específicas para o ambiente de desenvolvimento. Para isso, basta criar o arquivo application-dev.properties e adicionar as propriedades específicas para o ambiente de desenvolvimento. Com esse arquivo criado é necessário adicionar a seguinte linha no arquivo application.properties: spring.profiles.active=dev. 
 
+GET == buscar
+POST == inserção
+PUT == atualização
+DELETE == exclusão

@@ -1,7 +1,6 @@
 package influxdb.teste.demo.Repository;
 
 import influxdb.teste.demo.Model.Metric;
-
 import org.springframework.stereotype.Repository;
 
 import com.influxdb.client.DeleteApi;
@@ -17,7 +16,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Repository
 public class MetricRepository {
 
@@ -27,15 +25,25 @@ public class MetricRepository {
         this.influxDBClient = influxDBClient;
     }
 
+    /**
+     * Salva uma métrica no InfluxDB
+     * @param metric
+     */
     public void saveMetric(Metric metric) {
-        WriteApiBlocking writeApi = influxDBClient.getWriteApiBlocking();
+        WriteApiBlocking writeApi = influxDBClient.getWriteApiBlocking(); // Utilize o WriteApiBlocking para operações síncronas e WriteApi para operações assíncrona
         Point point = Point
             .measurement(metric.getName())
             .addField("value", metric.getValue())
-            .time(metric.getTimestamp(), WritePrecision.MS);
-        writeApi.writePoint(point);
+            .time(metric.getTimestamp(), WritePrecision.MS); // WritePrecision.MS para milissegundos
+
+        writeApi.writePoint(point); // Escreve a métrica no InfluxDB
     }
 
+    /**
+     * Retorna todas as métricas de um determinado range
+     * @param range
+     * @return
+     */
     public List<Metric> getAllMetrics(String range) {
         String fluxQuery = String.format("from(bucket: \"bucket\") |> range(start: %s)", range);
         List<FluxTable> tables = influxDBClient.getQueryApi().query(fluxQuery);
@@ -49,8 +57,12 @@ public class MetricRepository {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Deleta uma métrica do InfluxDB
+     * @param metric
+     */
     public void deleteMetric(Metric metric) {
-       
+
         DeleteApi deleteApi = influxDBClient.getDeleteApi();
 
         OffsetDateTime start = OffsetDateTime.ofInstant(metric.getTimestamp(), ZoneOffset.UTC);
@@ -65,7 +77,7 @@ public class MetricRepository {
             "bucketMetrics", // Substitua pelo nome real do seu bucket
             "GEDT"     // Substitua pelo nome da sua organização
         );
-       
+
     }
 
 }
